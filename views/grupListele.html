@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Isa Karaman | grup listele</title>
+
+    <link rel="stylesheet" href="../css/main.css?v=<?php echo time(); ?>" />
+
+    <style>
+      #btn {
+        margin-bottom: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <!-- Navihation -->
+      <!-- Ana Sayfa Navigasyonu -->
+      <nav>
+        <ul class="nav_links">
+          <li><a href="anaSayfa.html">Kullanici Listele</a></li>
+          <!-- kullaniciEkle.html -->
+          <li><a href="./kullaniciEkle.html">Kullanici Ekle</a></li>
+          <!-- grup ile kullanilari ayni yerde gosterebilirim. -->
+          <li><a class="current" href="./grupListele.html">Grup Listele</a></li>
+          <!-- gurupEkle.html -->
+          <li><a href="./grupEkle.html">Grup Ekle</a></li>
+        </ul>
+        <button class="btn-cikis">Cikis Yap</button>
+      </nav>
+      <!-- Navihation End-->
+
+      <!-- Kullanicilar -->
+      <section>
+        <div class="form-section">
+          <form class="ekle-form">
+            <label class="form-ekle" for="groupad">
+              <span>
+                Grub Adı :
+              </span>
+              <select class="form-selection" name="groupAd" id="groupad">
+              </select>
+            </label>
+            <button id="btn" class="btn-ekle">
+              Getir
+            </button>
+          </form>
+        </div>
+        <!-- tablo sekilde burada gosterilebilir -->
+        <table id="kullanicilar" class="anaSayfa-Tablo"></table>
+        <!-- inner.html yada baska yollar ile emin degilim. -->
+      </section>
+      <!-- Kullanicilar  End-->
+    </main>
+
+    <script>
+      async function olanGruplar() {
+        const select = document.getElementById("groupad");
+
+        const req = await fetch("../backend/grupGet.php");
+        const res = await req.text();
+        const data = JSON.parse(res);
+        const gruplar = data.gruplar;
+
+        gruplar.forEach((grup) => {
+          const options = document.createElement("option");
+          options.value = grup.id;
+          options.textContent = grup.grupAd;
+          select.appendChild(options);
+        });
+      }
+
+      function main() {
+        olanGruplar();
+
+        const btn = document.getElementById("btn");
+        const grupdVal = document.getElementById("groupad");
+        const tablo = document.getElementById("kullanicilar");
+
+        btn.addEventListener("click", async function getData(e) {
+          e.preventDefault();
+          console.log(grupdVal.value);
+
+          const req = await fetch(
+            `../backend/spesifkGrupGet.php?groupAd=${grupdVal.value}`
+          );
+          const res = await req.text();
+          const data = JSON.parse(res);
+
+          const kisiler = data.kullanicilar;
+
+          tablo.innerHTML = `
+            <tr>
+            <th>ID</th>
+            <th>AD</th>
+            <th>SOYAD</th>
+            <th>EMAIL</th>
+            <th>TELL NO</th>
+            <th>CEP NO</th>
+            <th>UNVAN</th>
+            <th>GRUP ADI</th>
+            </tr>
+            `;
+
+          kisiler.forEach((kisi) => {
+            const trTag = document.createElement("tr");
+            const kisiIdTag = document.createElement("td");
+            const adTag = document.createElement("td");
+            const soyadTag = document.createElement("td");
+            const emailTag = document.createElement("td");
+            const telNo = document.createElement("td");
+            const cepNo = document.createElement("td");
+            const unvan = document.createElement("td");
+            const grupAd = document.createElement("td");
+
+            // bilgiler tabloya eklenmesi
+            kisiIdTag.textContent = kisi.kisilerId;
+            adTag.textContent = kisi.ad;
+            soyadTag.textContent = kisi.soyad;
+            emailTag.textContent = kisi.email;
+            telNo.textContent = kisi.telNo;
+            cepNo.textContent = kisi.cepNo;
+            unvan.textContent = kisi.unvan;
+            grupAd.textContent = kisi.grupAd;
+
+            // bilgilerin her bir tr tag arasinda olmasi
+            trTag.appendChild(kisiIdTag);
+            trTag.appendChild(adTag);
+            trTag.appendChild(soyadTag);
+            trTag.appendChild(emailTag);
+            trTag.appendChild(telNo);
+            trTag.appendChild(cepNo);
+            trTag.appendChild(unvan);
+            trTag.appendChild(grupAd);
+
+            // root enson ekliyoruz alev gibiyim
+            tablo.appendChild(trTag);
+          });
+        });
+      }
+
+      main();
+    </script>
+  </body>
+</html>

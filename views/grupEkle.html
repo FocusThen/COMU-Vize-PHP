@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Isa Karaman | Group ekle</title>
+
+    <link rel="stylesheet" href="../css/main.css?v=<?php echo time(); ?>" />
+  </head>
+  <body>
+    <main>
+      <!-- Ana Sayfa Navigasyonu -->
+      <nav>
+        <ul class="nav_links">
+          <li><a href="anaSayfa.html">Kullanici Listele</a></li>
+          <!-- kullaniciEkle.html -->
+          <li><a href="./kullaniciEkle.html">Kullanici Ekle</a></li>
+          <!-- grup ile kullanilari ayni yerde gosterebilirim. -->
+          <li><a href="./grupListele.html">Grup Listele</a></li>
+          <!-- gurupEkle.html -->
+          <li><a class="current" href="./grupEkle.html">Grup Ekle</a></li>
+        </ul>
+        <button class="btn-cikis">Cikis Yap</button>
+      </nav>
+      <!-- Navihation End-->
+      <section class="form-section">
+        <form class="ekle-form" action="../backend/groupEkle.php" method="post">
+          <!-- Template -->
+          <label class="form-ekle" for="groupekle">
+            <span>
+              Grup Ekle :
+            </span>
+            <input
+              class="form-input"
+              type="text"
+              name="groupEkle"
+              id="groupekle"
+              required
+            />
+          </label>
+          <!-- Template end -->
+          <button class="btn-ekle">Ekle</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

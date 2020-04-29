@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Isa Karaman</title>
+    <link rel="stylesheet" href="../css/main.css?v=<?php echo time(); ?>" />
+  </head>
+  <body>
+    <div>
+      <!-- Form start -->
+
+      <!-- Login.php de veritaninda sorgu yapmakta  Eger kullanici var ise ana sayfaya yonlendirmekte.-->
+      <form action="./backend/login.php" method="POST">
+        <!-- Inputlari label icerisine ekliyoruz cunku labela tiklandiginda inputa direkt focuslansin diye -->
+        <label class="text-primary" for="kullaniciad">
+          Kullanici Ad :
+          <!-- inputlara Requred ekledim eger bos olursa inputlar html5 otomatik hata verir. ayrica backend de kontrolu yapilabilir.-->
+          <input id="kullaniciad" type="text" name="kullaniciAd" required />
+        </label>
+        <label for="kullanicisifre">
+          Sifre :
+          <input
+            id="kullanicisifre"
+            type="text"
+            name="kullaniciSifre"
+            required
+          />
+        </label>
+
+        <!-- Button tagi default olarak submit type'indadir. -->
+        <button>Giris</button>
+      </form>
+      <!-- Form End -->
+    </div>
+  </body>
+</html>
